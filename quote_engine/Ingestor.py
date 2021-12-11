@@ -1,7 +1,7 @@
 from typing import List
 
 from .IngestorInterface import IngestorInterface
-from .QuoteMode import QuoteModel
+from .QuoteModel import QuoteModel
 from .DocxIngestor import DocxIngestor
 from .CSVIngestor import CSVIngestor
 
