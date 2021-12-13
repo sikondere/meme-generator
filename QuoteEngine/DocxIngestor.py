@@ -1,15 +1,19 @@
+"""Docx Ingestor."""
 import docx
 from typing import List
-import random
 
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
 
+
 class DocxIngestor(IngestorInterface):
+    """Docx Ingestor."""
+
     allowed_extensions = ['docx']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Parse method."""
         if not cls.can_ingest(path):
             raise Exception('cannot ingest exception')
         quotes = []
@@ -17,7 +21,6 @@ class DocxIngestor(IngestorInterface):
         for paragraph in doc.paragraphs:
             if paragraph.text != '':
                 parse = paragraph.text.split('-')
-                quote = QuoteModel(body = parse[0], author = parse[1])
+                quote = QuoteModel(body=parse[0], author=parse[1])
                 quotes.append(quote)
-        index = random.randint(0, len(quotes)-1)
-        return quotes[index]
+        return quotes
