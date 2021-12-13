@@ -54,7 +54,7 @@ def meme_post():
     """Create a user defined meme."""
     if not request.form['image_url']:
         return render_template('meme_form.html')
-    tmp = f'./tmp/{random.randint(0,1000)}.jpg'
+    tmp = './tmp/'+str(random.randint(0,1000))+'.jpg'
     response = requests.get(request.form['image_url'])
     file = open(tmp, 'wb')
     file.write(response.content)
