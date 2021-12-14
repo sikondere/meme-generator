@@ -1,1 +1,7 @@
 env/
+tmp/
+static/
+__pycache__/
+MemeEngine/__pycache__/
+QuoteEngine/__pycache__/
+.python-version

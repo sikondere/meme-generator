@@ -2,7 +2,9 @@
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+import os
 import random
+import sys
 
 
 class MemeEngine:
@@ -11,6 +13,11 @@ class MemeEngine:
     def __init__(self, output_dir):
         """Init."""
         self.output_dir = output_dir
+        try:
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+        except Exception:
+            print(Exception)
 
     def make_meme(self, img_path, text, author, width=500) -> str:
         """Make memes."""
@@ -21,13 +28,13 @@ class MemeEngine:
             font = ImageFont.truetype('FreeMono.ttf', 20)
             p1 = random.randint(0, 200)
             p2 = random.randint(0, 200)
-            x.text((p1, p2), f'{text}\n {author}',
+            x.text((p1, p2), str(text)+'\n'+str(author),
                    font=font, fill=(255, 255, 255), stroke_width=1,
                                     stroke_fill="white")
-            # im.show()
             tag = random.randint(0, 1000)
-            path = self.output_dir+f'{str(tag)}.jpg'
+            meme = str(tag)+'.jpg'
+            path = os.path.join(self.output_dir, meme)
             im.save(path, 'JPEG')
             return path
-        except Exception:
-            pass
+        except:
+            print('Error: ', sys.exc_info()[0])

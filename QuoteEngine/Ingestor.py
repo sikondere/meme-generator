@@ -1,5 +1,6 @@
 """Ingestor."""
 from typing import List
+import sys
 
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
@@ -17,6 +18,9 @@ class Ingestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """Parse method."""
-        for _, ingestor in enumerate(cls.ingestors):
-            if ingestor.can_ingest(path):
-                return ingestor.parse(path)
+        try:
+            for _, ingestor in enumerate(cls.ingestors):
+                if ingestor.can_ingest(path):
+                    return ingestor.parse(path)
+        except:
+            print('Error: ', sys.exc_info()[0])
