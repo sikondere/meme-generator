@@ -46,7 +46,7 @@ def meme_rand():
         path = meme.make_meme(img, quote.body, quote.author)
         return render_template('meme.html', path=path)
     except:
-        print('Error: ', sys.exc_info()[0])
+       return render_template('error.html')
 
 
 @app.route('/create', methods=['GET'])
@@ -55,7 +55,7 @@ def meme_form():
     try:
         return render_template('meme_form.html')
     except:
-        print('Error: ', sys.exc_info()[0])
+        return render_template('error.html')
 
 
 @app.route('/create', methods=['POST'])
@@ -73,7 +73,9 @@ def meme_post():
         os.remove(tmp)
         return render_template('meme.html', path=path)
     except:
-        print('Error: ', sys.exc_info()[0])
+        # print('Error: ', sys.exc_info()[0])
+        print("Invalid file type entered")
+        return render_template('meme_error.html')
 
 
 if __name__ == "__main__":

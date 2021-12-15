@@ -5,7 +5,7 @@ from PIL import ImageDraw
 import os
 import random
 import sys
-
+import textwrap
 
 class MemeEngine:
     """Generate memes."""
@@ -28,7 +28,9 @@ class MemeEngine:
             font = ImageFont.truetype('./_data/Fonts/FreeMono.ttf', 20)
             p1 = random.randint(0, 200)
             p2 = random.randint(0, 200)
-            x.text((p1, p2), str(text)+'\n'+str(author),
+            wrapper = textwrap.TextWrapper(width=20)
+            meme_text = wrapper.fill(text=str(text)+'\n'+str(author))
+            x.text((p1, p2), meme_text,
                    font=font, fill=(255, 255, 255), stroke_width=1,
                                     stroke_fill="white")
             tag = random.randint(0, 1000)

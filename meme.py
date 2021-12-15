@@ -3,6 +3,7 @@ import os
 import random
 import argparse
 import sys
+import urllib.request
 
 from QuoteEngine import Ingestor, QuoteModel
 from MemeEngine import MemeEngine
@@ -13,6 +14,7 @@ def generate_meme(path=None, body=None, author=None):
     try:
         img = None
         quote = None
+        path_supplied = False
 
         if path is None:
             images = "./_data/photos/dog/"
@@ -22,7 +24,13 @@ def generate_meme(path=None, body=None, author=None):
 
             img = random.choice(imgs)
         else:
-            img = path[0]
+            path_supplied = True
+            tmp = './'+str(random.randint(0,1000))+'.jpg'
+            opener = urllib.request.build_opener()
+            opener.addheaders = [('User-Agent', 'meme-generator')]
+            urllib.request.install_opener(opener)
+            urllib.request.urlretrieve(path, tmp)
+            img = tmp
 
         if body is None:
             quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
@@ -40,6 +48,8 @@ def generate_meme(path=None, body=None, author=None):
 
         meme = MemeEngine('./tmp')
         path = meme.make_meme(img, quote.body, quote.author)
+        if path_supplied == True:
+            os.remove(tmp)
         return path
     except:
         print('Error: ', sys.exc_info()[0])
