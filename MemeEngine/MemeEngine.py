@@ -16,8 +16,8 @@ class MemeEngine:
         try:
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
-        except Exception:
-            print(Exception)
+        except:
+            print('Error: ', sys.exc_info()[0])
 
     def make_meme(self, img_path, text, author, width=500) -> str:
         """Make memes."""
@@ -25,7 +25,7 @@ class MemeEngine:
             im = Image.open(img_path)
             im.thumbnail((width, width), Image.ANTIALIAS)
             x = ImageDraw.Draw(im)
-            font = ImageFont.truetype('FreeMono.ttf', 20)
+            font = ImageFont.truetype('./_data/Fonts/FreeMono.ttf', 20)
             p1 = random.randint(0, 200)
             p2 = random.randint(0, 200)
             x.text((p1, p2), str(text)+'\n'+str(author),
